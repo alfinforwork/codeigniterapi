@@ -8,6 +8,35 @@ class Api_model extends CI_Model{
 		return $result->result();
 	}
 
+
+	public function getid($id){
+		$this->db->where('id',$id);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+	public function getnama($nama){
+		$this->db->where('nama', $nama);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+	public function getemail($email){
+		$this->db->where('email', $email);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+	public function getcreate_at($create_from,$create_to){
+		$this->db->where('create_at >=', $create_from);
+		$this->db->where('create_at <=', $create_to);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+	public function getrole($role){
+		$this->db->where('role', $role);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+
+
 	function post($nama, $email, $password, $role)
 	{
 		date_default_timezone_set("Asia/Bangkok");
@@ -24,6 +53,23 @@ class Api_model extends CI_Model{
 		$result = $this->db->insert('user', $data);
 		return $result;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	function put($id, $nama, $email, $password, $role)
 	{

@@ -12,19 +12,21 @@ class Api extends RestController{
 		$this->load->model('Api_model');
 	}
 
-	public function index_get(){
-			$result = $this->Api_model->get();
+	public function index_get()
+	{
+		$id				= $this->get('id');
+		$nama			= $this->get('nama');
+		$email			= $this->get('email');
+		$create_from	= $this->get('create_from');
+		$create_to		= $this->get('create_to');
+		$role			= $this->get('role');
+		if ($id) {
+			$result = $this->Api_model->getid($id);
+
 			if ($result) {
 				$response = array();
 				foreach ($result as $key) {
-					$response = array(
-						'id'		=>$key->id,
-						'nama'		=>$key->nama,
-						'email'		=>$key->email,
-						'password'	=>$key->password,
-						'create_at'	=>$key->create_at,
-						'role'		=>$key->role
-					);
+					$response[] = $key;
 				}
 			} else {
 				$response = array(
@@ -32,6 +34,90 @@ class Api extends RestController{
 					'message'	=> 'data gagal dihapus'
 				);
 			}
+		}elseif ($nama) {
+			$result = $this->Api_model->getnama($nama);
+
+			if ($result) {
+				$response = array();
+				foreach ($result as $key) {
+					$response[] = $key;
+				}
+			} else {
+				$response = array(
+					'status'	=> 'gagal',
+					'message'	=> 'data gagal dihapus'
+				);
+			}
+		}elseif ($email) {
+			$result = $this->Api_model->getemail($email);
+
+			if ($result) {
+				$response = array();
+				foreach ($result as $key) {
+					$response[] = $key;
+				}
+			} else {
+				$response = array(
+					'status'	=> 'gagal',
+					'message'	=> 'data gagal dihapus'
+				);
+			}
+		}elseif ($create_from and $create_to) {
+			$result = $this->Api_model->getcreate_at($create_from,$create_to);
+
+			if ($result) {
+				$response = array();
+				foreach ($result as $key) {
+					$response[] = $key;
+				}
+			} else {
+				$response = array(
+					'status'	=> 'gagal',
+					'message'	=> 'data gagal dihapus'
+				);
+			}
+		}elseif ($role) {
+			if (($role=='Admin Super') or ($role=='Admin') or ($role=='User')) {
+				$result = $this->Api_model->getrole($role);
+
+				if ($result) {
+					$response = array();
+					foreach ($result as $key) {
+						$response[] = $key;
+					}
+				} else {
+					$response = array(
+						'status'	=> 'gagal',
+						'message'	=> 'data gagal dihapus'
+					);
+				}
+			}else {
+				$response = array(
+					'status'	=> 'gagal',
+					'message'	=> 'data gagal dihapus'
+				);
+			}
+		}elseif (!$id and !$nama and !$email and !$role and !$create_from and !$create_to) {
+			$result = $this->Api_model->get();
+
+			if ($result) {
+				$response = array();
+				foreach ($result as $key) {
+					$response[] = $key;
+				}
+			} else {
+				$response = array(
+					'status'	=> 'gagal',
+					'message'	=> 'data gagal ditampilkan'
+				);
+			}
+		}else {
+			$response = array(
+				'status'	=> 'gagal',
+				'message'	=> 'data gagal ditampilkan'
+			);
+		}
+			
 
 		$this->response($response);
 	}
