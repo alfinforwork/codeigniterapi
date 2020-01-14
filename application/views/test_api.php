@@ -28,24 +28,6 @@
 
 	<!-- Jquery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-
-			function fetch_data() {
-				$.ajax({
-					method: "POST",
-					url: "TestApi/action",
-					data: {
-						data_action: 'fetch_all'
-					},
-					success: function(data) {
-						$('tbody').html(data);
-					}
-				});
-			}
-			fetch_data();
-		});
-	</script>
 </body>
 
 </html>

@@ -5,4 +5,8 @@ class TestApi extends CI_Controller{
 	public function index(){
 		$this->load->view('test_api');
 	}
+	public function edit()
+	{
+		
+	}
 }
