@@ -1,5 +1,4 @@
-aplikasi menggunakan postman
-url = http://localhost/project/CodeIgniter/api
+aplikasi menggunakan postman ataupun aplikasi pengelola/pengetes API lainnya
 1. GET
 <br>
 bisa tanpa menggunakan apapun
