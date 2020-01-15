@@ -60,7 +60,33 @@
 		</div>
 
 
+		<button id="reset">Reset</button>
+		<div class="text-right mt-2">
+			<select name="cari" id="cari">
+				<option value="nama">Nama</option>
+			</select>
+			<input type="text" name="namacari" id="namacari" required>
+			<button type="button" name="carinama" id="carinama" value="Cari"> Cari </button>
+		</div>
+		<div class="text-right mt-2">
+			<label for="tanggaldari">Cari Tanggal</label>
+			<input type="date" name="tanggaldari" id="tanggaldari" required>
+			<input type="time" name="jamdari" id="jamdari">
+			<label for="tanggalke">ke</label>
+			<input type="date" name="tanggalke" id="tanggalke" required>
+			<input type="time" name="jamke" id="jamke">
 
+			<button type="button" name="caritanggal" id="caritanggal" value="Cari"> Cari </button>
+		</div>
+		<div class="text-right mt-2">
+			<label for="carirole">Cari Tanggal</label>
+			<select name="carirole" id="carirole">
+				<option value="Super Admin">Super Admin</option>
+				<option value="Admin">Admin</option>
+				<option value="User">User</option>
+			</select>
+			<button type="button" name="carirolebtn" id="carirolebtn" value="carirolebtn"> Cari </button>
+		</div>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -129,6 +155,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 
+			$('#reset').click(function() {
+				fetch_data();
+			});
+
 			function fetch_data() {
 				$.ajax({
 					type: 'GET',
@@ -157,6 +187,40 @@
 
 				});
 			}
+
+			// Cari berdasarkan nama
+			$("#carinama").click(function() {
+				var nama = $('#namacari').val();
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url() ?>testapi/tampilnama",
+					dataType: "JSON",
+					data: {
+						nama: nama
+					},
+					success: function(data) {
+						var html = '';
+						var i;
+						for (i = 0; i < data.length; i++) {
+							html += '<tr>' +
+								'<td>' + data[i].id + '</td>' +
+								'<td>' + data[i].nama + '</td>' +
+								'<td>' + data[i].email + '</td>' +
+								'<td>' + data[i].password + '</td>' +
+								'<td>' + data[i].create_at + '</td>' +
+								'<td>' + data[i].role + '</td>' +
+								'<td style="text-align:right;">' +
+								'<a class="btn btn-primary" id="edit" data="' + data[i].id + '">Edit</a>' +
+								'<a class="btn btn-primary" id="hapus" data="' + data[i].id + '">Hapus</a>' +
+								'</td>' +
+								'</tr>';
+						}
+						$('tbody').html(html);
+					}
+				});
+
+			});
+
 
 			$("#tambahbtn").click(function() {
 				var nama = $('#tambahnama').val();
@@ -258,6 +322,93 @@
 				fetch_data();
 			});
 
+
+
+
+
+			// Cari Berdasarkan Tanggal
+			$("#caritanggal").click(function() {
+				var tanggaldari = $('#tanggaldari').val();
+				var jamdari = $('#jamdari').val();
+				var tanggalke = $('#tanggalke').val();
+				var jamke = $('#jamke').val();
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url() ?>testapi/tampiltanggal",
+					dataType: "JSON",
+					data: {
+						tanggaldari: tanggaldari,
+						jamdari: jamdari,
+						tanggalke: tanggalke,
+						jamke: jamke
+					},
+					success: function(data) {
+						var html = '';
+						var i;
+						for (i = 0; i < data.length; i++) {
+							html += '<tr>' +
+								'<td>' + data[i].id + '</td>' +
+								'<td>' + data[i].nama + '</td>' +
+								'<td>' + data[i].email + '</td>' +
+								'<td>' + data[i].password + '</td>' +
+								'<td>' + data[i].create_at + '</td>' +
+								'<td>' + data[i].role + '</td>' +
+								'<td style="text-align:right;">' +
+								'<a class="btn btn-primary" id="edit" data="' + data[i].id + '">Edit</a>' +
+								'<a class="btn btn-primary" id="hapus" data="' + data[i].id + '">Hapus</a>' +
+								'</td>' +
+								'</tr>';
+						}
+						$('tbody').html(html);
+					}
+				});
+
+			});
+
+
+
+
+
+			// Cari Berdasarkan Role
+			$("#carirolebtn").click(function() {
+				var role = $('#carirole').val();
+				console.log(role);
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url() ?>testapi/tampilrole",
+					dataType: "JSON",
+					data: {
+						role: role
+					},
+					success: function(data) {
+						var html = '';
+						var i;
+						for (i = 0; i < data.length; i++) {
+							html += '<tr>' +
+								'<td>' + data[i].id + '</td>' +
+								'<td>' + data[i].nama + '</td>' +
+								'<td>' + data[i].email + '</td>' +
+								'<td>' + data[i].password + '</td>' +
+								'<td>' + data[i].create_at + '</td>' +
+								'<td>' + data[i].role + '</td>' +
+								'<td style="text-align:right;">' +
+								'<a class="btn btn-primary" id="edit" data="' + data[i].id + '">Edit</a>' +
+								'<a class="btn btn-primary" id="hapus" data="' + data[i].id + '">Hapus</a>' +
+								'</td>' +
+								'</tr>';
+						}
+						$('tbody').html(html);
+					}
+				});
+
+			});
+
+
+
+
+
+
+			// tampil
 			fetch_data();
 
 

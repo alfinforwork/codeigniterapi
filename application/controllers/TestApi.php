@@ -25,6 +25,30 @@ class TestApi extends CI_Controller{
 		$result = $this->Api_model->getid($id);
 		echo json_encode($result);
 	}
+	public function tampilnama()
+	{
+		$nama		= $this->input->post('nama');
+		$result = $this->Api_model->getnama($nama);
+		echo json_encode($result);
+	}
+	public function tampiltanggal()
+	{
+		$tanggaldari		= $this->input->post('tanggaldari');
+		$tanggalke		= $this->input->post('tanggalke');
+		$jamdari		= $this->input->post('jamdari');
+		$jamke		= $this->input->post('jamke');
+
+		$tanggalD = $tanggaldari.' '.$jamdari;
+		$tanggalK = $tanggalke.' '.$jamke;
+		$result = $this->Api_model->getcreate_at($tanggalD,$tanggalK);
+		echo json_encode($result);
+	}
+	public function tampilrole()
+	{
+		$role		= $this->input->post('role');
+		$result = $this->Api_model->getrole($role);
+		echo json_encode($result);
+	}
 	public function tambah()
 	{
 
